@@ -1,0 +1,6 @@
+package com.example.pitch_todo
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
