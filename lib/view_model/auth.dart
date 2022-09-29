@@ -7,27 +7,27 @@ import 'package:http/http.dart' as http;
 import '../model/exceptions.dart';
 
 class Auth with ChangeNotifier {
-  String? _token;
-  String? _userId;
+  String _token = "";
+  late String _userId;
 
   final baseUrl = "https://identitytoolkit.googleapis.com/v1/accounts:";
   final apiKey = "AIzaSyCmNyKP9tGDPKcPjM7VrT_evnQDOrwGPbk";
-  String? get token {
-    if (_token != null) {
-      return _token;
-    }
-    return null;
+  String get token {
+    //  if (_token != null) {
+    return _token;
+    // }
+    // return null;
   }
 
-  String? get userId {
-    if (_userId != null) {
-      return _userId;
-    }
-    return null;
+  String get userId {
+    //  if (_userId != null) {
+    return _userId;
+    // }
+    // return null;
   }
 
-  bool get isAuth {
-    return token != null;
+  bool get isNotAuth {
+    return token == "";
   }
 
   Future<void> authenticate(
@@ -61,8 +61,38 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> logOut() async {
-    _token = null;
-    _userId = null;
+    _token = "";
+    _userId = "";
     notifyListeners();
+  }
+
+  Future<void> requestPasswordRecovery(String email) async {
+    final url = Uri.parse(
+        "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=$apiKey");
+    final response = await http.post(
+      url,
+      body: jsonEncode(
+        {"requestType": "PASSWORD_RESET", "email": email},
+      ),
+    );
+    final responseData = jsonDecode(response.body);
+    if (responseData["error"] != null) {
+      throw HttpExceptions(responseData["error"]["message"]);
+    }
+  }
+
+  Future<void> verifyPRCode(String pwCode, String newPassword) async {
+    final url = Uri.parse(
+        "https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=$apiKey");
+    final response = await http.post(
+      url,
+      body: jsonEncode(
+        {"oobCode": pwCode, "newPassword": newPassword},
+      ),
+    );
+    final responseData = jsonDecode(response.body);
+    if (responseData["error"] != null) {
+      throw HttpExceptions(responseData["error"]["message"]);
+    }
   }
 }

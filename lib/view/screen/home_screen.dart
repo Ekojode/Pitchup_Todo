@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import '../../view_model/auth.dart';
 import '../screen/add_task__by_category_screen.dart';
 import '../widgets/snack_bar.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Tasks tasks = Provider.of<Tasks>(context);
+    final auth = Provider.of<Auth>(context);
     List<TaskModel> taskList = tasks.taskList;
     double height1 = MediaQuery.of(context).size.height;
     double width1 = MediaQuery.of(context).size.width;
@@ -68,6 +70,16 @@ class _HomeScreenState extends State<HomeScreen> {
           'MyPitchHub TODO',
           style: kTextStyle1(height),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                auth.logOut();
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.red,
+              ))
+        ],
         elevation: 0.5,
       ),
       body: Column(

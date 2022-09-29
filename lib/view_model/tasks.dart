@@ -7,8 +7,8 @@ import '../model/exceptions.dart';
 import '../model/task_model.dart';
 
 class Tasks extends ChangeNotifier {
-  final String token;
-  final String userId;
+  String? token;
+  String? userId;
 
   final baseUrl = "https://pitch-todo-default-rtdb.firebaseio.com";
 

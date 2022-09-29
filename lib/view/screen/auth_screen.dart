@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pitch_todo/model/exceptions.dart';
+import 'package:pitch_todo/view/screen/password_reset_request_screen.dart';
 import 'package:pitch_todo/view/utilities/color.dart';
 import 'package:pitch_todo/view/widgets/custom_text_field.dart';
 import 'package:pitch_todo/view/widgets/snack_bar.dart';
@@ -145,22 +146,42 @@ class _AuthScreenState extends State<AuthScreen> {
                 SizedBox(
                   height: height / 25,
                 ),
-                TextButton(
-                    onPressed: () {
-                      if (_authStaus == AuthStaus.signIn) {
-                        setState(() {
-                          _authStaus = AuthStaus.signUp;
-                        });
-                      } else {
-                        _authStaus = AuthStaus.signIn;
-                      }
-                    },
-                    child: Text(
-                      _authStaus == AuthStaus.signUp
-                          ? "Joined us before?, Signin"
-                          : "New to Pitch Hub: SignUp",
-                      style: kTextStyle8(height),
-                    ))
+                Column(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        if (_authStaus == AuthStaus.signIn) {
+                          setState(() {
+                            _authStaus = AuthStaus.signUp;
+                          });
+                        } else {
+                          _authStaus = AuthStaus.signIn;
+                        }
+                      },
+                      child: Text(
+                        _authStaus == AuthStaus.signUp
+                            ? "Joined us before?, Signin"
+                            : "New to Pitch Hub: SignUp",
+                        style: kTextStyle8(height),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PasswordResetRequest(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Forgot Password?",
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.bold),
+                        ))
+                  ],
+                )
               ],
             ),
           ),

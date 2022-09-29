@@ -26,13 +26,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProxyProvider<Auth, Tasks>(
             create: (context) => Tasks('', '', []),
             update: (context, auth, previous) =>
-                Tasks(auth.token!, auth.userId!, previous!.taskList),
+                Tasks(auth.token, auth.userId, previous!.taskList),
           )
         ],
         builder: (context, child) {
           return Consumer<Auth>(
             builder: (context, Auth auth, child) => MaterialApp(
-              home: auth.isAuth ? const HomeScreen() : const AuthScreen(),
+              home: auth.isNotAuth ? const AuthScreen() : const HomeScreen(),
               debugShowCheckedModeBanner: false,
               scaffoldMessengerKey: messengerKey,
             ),
