@@ -22,6 +22,7 @@ class TodoTile extends StatelessWidget {
         ),
         color: task.isCompleted == 1 ? kPinkColor : kBlueColor,
         child: ListTile(
+          
           // leading:
           //     Checkbox(value: task.isCompleted == 1, onChanged: (value) {}),
           title: Text(

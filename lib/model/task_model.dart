@@ -3,7 +3,7 @@ class TaskModel {
   final String category;
   final String title;
   final String note;
-  int? id;
+  String? id;
   int? isCompleted;
 
   TaskModel({
